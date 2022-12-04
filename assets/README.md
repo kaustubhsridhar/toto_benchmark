@@ -5,7 +5,6 @@ The data is parsed into a python list of dictionaries, where each dictionary is 
 - `'traj_id'`: string. The name of the folder containing all images of the trajectory
 - `'observations'`: numpy array of shape (*horizon*, 7). Contains the robot's jointstates (as absolute joint angles) at each timestep
 - `'cam0c'`: python array of length *horizon*. Contains the filename of RGB images
-- `'cam0d'`: python array of length *horizon*. Contains the filename of depth images
 - `'actions'`: numpy array of shape (*horizon*, 7). Contains the robot's actions (as absolute joint angles) at each timestep
 - `'rewards'`: numpy array of length (*horizon*, ). The reward is sparse, which means the reward at all but the last step is 0. We haven’t done any normalization for the reward in the current version
 - `'terminated'`: numpy array of length (*horizon*, ). This denotes whether the trajectory is terminated at each timestep, so all the entries is 0 except the last entry being 1
