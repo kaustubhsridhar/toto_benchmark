@@ -5,7 +5,7 @@
 You can either use a local conda environment or a docker environment.
 
 ### Setup conda environment
-1. Run ```source setup_toto_env.sh```
+1. Run the following command to create a new conda environment: ```source setup_toto_env.sh```
 
 ### Setup docker environment
 1. Follow the instructions in ```docker_instructions.md```
@@ -21,12 +21,15 @@ TOTO consists of two tabletop manipulations tasks, scooping and pouring. The dat
 We release the following datasets: 
 - `cloud-dataset-scooping.zip`: TOTO scooping dataset
 - `cloud-dataset-pouring.zip`: TOTO pouring dataset
-- `scooping_parsed_with_embeddings_moco_conv5_robocloud.pkl`: the same scooping dataset parsed with MOCO (Ours) pre-trained visual representations. 
+
+Additional Info:
+- `scooping_parsed_with_embeddings_moco_conv5_robocloud.pkl`: the same scooping dataset parsed with MOCO (Ours) pre-trained visual representations. (included as part of the TOTO scooping dataset) 
 - `pouring_parsed_with_embeddings_moco_conv5_robocloud.pkl`: the same pouring dataset parsed with MOCO (Ours) pre-trained visual representations. 
+(included as part of the TOTO pouring dataset)
 
 For more detailed dataset format information, see `assets/README.md`
 
-## Train a TOTO BC Agent
+## Train a TOTO Behavior Cloning (BC) Agent
 Here's an example command to train an image-based BC agent with MOCO (Ours) as the image encoder. You will need to download `scooping_parsed_with_embeddings_moco_conv5_robocloud.pkl` to have this launched.
 
 ```
@@ -37,12 +40,12 @@ python train.py --config-name train_bc.yaml data.pickle_fn=assets/cloud-dataset-
 
 ## Contributing to TOTO
 
- We invite the community to submit their methods to TOTO benchmark. We allow the following types of submission:
+ We invite the community to submit their methods to TOTO benchmark. We support the following challenges:
 
-- **Type 1**: a pre-trained visual representation model. 
-- **Type 2**: an agent policy which uses either a custom visual representation or the ones we provide.
+- **Challenge 1**: a pre-trained visual representation model. 
+- **Challenge 2**: an agent policy which uses either a custom visual representation or the ones we provide.
 
-### Type 1: Contributing a Visual Representation Model
+### Challenge 1: Visual Representation Model Challenge
 
 To submit your custom visual representation model to TOTO, you will train your visual representation model in any preferred way, generate image embeddings for TOTO datasets with your model, and finally train and submit a BC agent on this dataset. You will submit both your visual representation model and the BC model. We have provided scripts for interfacing with your vision model and for BC training. Please see the following instructions for details. 
 
@@ -81,7 +84,7 @@ To submit your custom visual representation model to TOTO, you will train your v
 - Once the above is done, run `python test_stub_env.py -f outputs/<path_to>/<agent>/` for a simple simulated test on the robot. If everything works as expected, we are ready to have the agent to be evaluated on the real robot!
 - For submission, Run ```prepare_submission.sh``` script to generate a zipped folder which is ready for submission.
 
-### Type 2: Contributing an Agent
+### Challenge 2: Agent Policy Challenge
 To submit your agent, you will train your image-based agent on our datasets in any preferred way. You may develop your custom visual representation model or use existing ones in TOTO. Please see below for detailed instructions: 
 - Download the datasets [here](https://drive.google.com/drive/folders/1JGPGjCqUP4nUOAxY3Fpx3PjUQ_loo7fc?usp=share_link) and train your agents in your preferred way.
 - *(Optional)* If you plan to use any existing TOTO visual representation model, we release the pre-trained models [here](https://drive.google.com/drive/folders/1iqDIIIalTi3PhAnFjZxesksvFVldK42p?usp=sharing). Download the models and put them into `assets/`. Then, simply use our provided functions to load the models as follows:
