@@ -65,7 +65,7 @@ def precompute_embeddings_byol(cfg, paths, data_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--data_folder', type=str, default='assets/cloud-dataset-scooping/')
+    parser.add_argument('-p', '--data_folder', type=str, default='assets/cloud-dataset-pouring/')
     parser.add_argument('-e', '--vision_model', type=str, default='moco_conv5')
     args = parser.parse_args()
 

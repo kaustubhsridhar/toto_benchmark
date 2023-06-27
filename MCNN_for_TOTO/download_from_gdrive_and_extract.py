@@ -2,7 +2,7 @@ import gdown, os
 
 url_start = 'https://drive.google.com/uc?id='
 ids = [
-    '1U8N4X-Snkx9EYk_UvFghxmfS-qmdxCjj',
+    '1U8N4X-Snkx9EYk_UvFghxmfS-qmdxCjj', 
     '106YQ0oDcz5UaYM45mDQA3LeBUgQpawOU',
     '1hz6UNWpQHlh3kMohlKYxzqDt89RB_xkL',
     '1itoUjeBe9jURvfqeczPxjHVIx2T0G2F3',
@@ -16,7 +16,10 @@ for id in ids:
     gdown.download(url, quiet=False)
 
 # unzip the following files: assets/cloud-data-pouring.zip, assets/cloud-data-scooping.zip, assets/data_samples.zip with os
-for f in ['cloud-data-pouring.zip', 'cloud-data-scooping.zip', 'data_samples.zip']:
+for f in ['cloud-data-pouring.zip', 'data_samples.zip']:
     print(f'unzipping {f}')
     os.system(f'unzip {f}')
+
+print(f'unzipping cloud-data-scooping.zip with different command because of some issue with the zip file')
+os.system(f'jar xvf cloud-data-scooping.zip')
 
