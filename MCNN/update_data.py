@@ -45,14 +45,15 @@ if not os.path.exists(save_name):
     node_weights = torch.from_numpy(node_weights).float().to(device)
 
     # paths expanded
-    embeddings = np.concatenate([p['embeddings'] for p in train_paths])
-    observations = np.concatenate([p['observations'] for p in train_paths])
-    all_obs = np.concatenate((observations, embeddings), axis=1)
-    all_observations = deepcopy(all_obs[:-1])
+    embeddings = np.concatenate([p['embeddings'][:-1] for p in train_paths])
+    observations = np.concatenate([p['observations'][:-1] for p in train_paths])
+    all_observations = np.concatenate((observations, embeddings), axis=1)
     all_actions = np.concatenate([p['actions'][:-1] for p in train_paths])
     all_rewards = np.concatenate([p['rewards'][:-1] for p in train_paths])
 
-    all_next_observations = deepcopy(all_obs[1:])
+    next_embeddings = np.concatenate([p['embeddings'][1:] for p in train_paths])
+    next_observations = np.concatenate([p['observations'][1:] for p in train_paths])
+    all_next_observations = np.concatenate((observations, embeddings), axis=1)
 
     all_observations_tensor = deepcopy(all_observations)
     all_observations_tensor = torch.from_numpy(all_observations_tensor).float().to(device)
