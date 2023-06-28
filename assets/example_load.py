@@ -3,7 +3,9 @@ import numpy as np
 from PIL import Image
 import os
 
-paths = pickle.load(open('parsed.pkl', 'rb'))
+paths = pickle.load(open('assets/pouring_parsed_with_embeddings_moco_conv5.pkl', 'rb'))
+print(paths[0].keys()) # dict_keys(['traj_id', 'cam0c', 'cam0d', 'observations', 'actions', 'terminated', 'rewards', 'embeddings', 'delta_actions'])
+exit()
 s = np.concatenate([p['observations'][:-1] for p in paths])
 a = np.concatenate([p['actions'][:-1] for p in paths])
 sp = np.concatenate([p['observations'][1:] for p in paths])

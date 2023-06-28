@@ -1,0 +1,33 @@
+WARNING (theano.configdefaults): install mkl with `conda install mkl-service`: No module named 'mkl'
+WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+pouring all_observations.shape=(324696, 2055), all_actions.shape=(324696, 7)
+
+Main information
+
+[ALGORITHM] MyIncrementalGrowingNeuralGas
+
+[OPTION] verbose = True
+[OPTION] epoch_end_signal = None
+[OPTION] show_epoch = 1
+[OPTION] shuffle_data = True
+[OPTION] train_end_signal = None
+[OPTION] after_split_error_decay_rate = 0.5
+[OPTION] error_decay_rate = 0.995
+[OPTION] max_edge_age = 100
+[OPTION] max_nodes = 32469
+[OPTION] min_distance_for_update = 0.0
+[OPTION] n_inputs = 2055
+[OPTION] n_iter_before_neuron_added = 1000
+[OPTION] n_start_nodes = 32469
+[OPTION] neighbour_step = 0.05
+[OPTION] step = 0.2
+
+
+Start training
+
+[TRAINING DATA] shapes: (324696, 2055)
+[TRAINING] Total epochs: 1
+
+---------------------------------------------------------
+|    Epoch    |  Train err  |  Valid err  |    Time     |
+---------------------------------------------------------
