@@ -90,7 +90,12 @@ if not os.path.exists(save_name):
     updated_train_paths = []
     for path in train_paths:
         new_path = deepcopy(path)
-        obs = np.concatenate((path['observations'], path['embeddings']), axis=1)
+        for k in new_path.keys():
+            new_path[k] = new_path[k][:-1]
+        new_path['next_embeddings'] = path['embeddings'][1:]
+        new_path['next_observations'] = path['observations'][1:]
+
+        obs = np.concatenate((new_path['observations'], new_path['embeddings']), axis=1)
         obs = torch.from_numpy(obs).float().to(device)
         
         # get nearest memories
