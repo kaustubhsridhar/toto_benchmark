@@ -1,8 +1,8 @@
 import argparse
 import random
 
-import gym
-import d4rl
+# import gym
+# import d4rl
 
 import numpy as np
 import torch
@@ -28,7 +28,7 @@ alpha=2.5 for all D4RL-Gym tasks
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--algo-name", type=str, default="mem_bc", choices=["bc", "mem_bc", "td3bc", "mem_td3bc"])
-    parser.add_argument("--task", type=str, default="pen-human-v1")
+    parser.add_argument("--task", type=str, default="pouring")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--actor-lr", type=float, default=3e-4)
     parser.add_argument("--critic-lr", type=float, default=3e-4)
@@ -63,13 +63,12 @@ def train(args=get_args()):
         args.only_bc = False
 
     # create env and dataset
-    env = gym.make(args.task)
+    # env = gym.make(args.task)
     dataset = qlearning_dataset_percentbc(args.task, args.chosen_percentage, args.num_memories_frac)
-    if 'antmaze' in args.task:
-        dataset["rewards"] -= 1.0
-    args.obs_shape = (512,) if 'carla' in args.task else env.observation_space.shape
-    args.action_dim = 2 if 'carla' in args.task else np.prod(env.action_space.shape)
-    args.max_action = env.action_space.high[0]
+    args.obs_shape = dataset["observations"].shape[1:]
+    args.action_dim = dataset["actions"].shape[1]
+    args.max_action = np.max(np.abs(dataset["actions"]), axis=0)
+    print(f'max action: {args.max_action}')
 
     # create buffer
     buffer = ReplayBuffer(
@@ -89,7 +88,7 @@ def train(args=get_args()):
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
     torch.backends.cudnn.deterministic = True
-    env.seed(args.seed)
+    # env.seed(args.seed)
 
     # create policy model
     actor_hidden_dims = [1024, 1024] if 'carla' in args.task else [256, 256]
@@ -110,21 +109,9 @@ def train(args=get_args()):
     # scaler for normalizing observations
     scaler = StandardScaler(mu=obs_mean, std=obs_std)
 
-    # load perception encoder if carla
-    if 'carla' in args.task:
-        from offlinerlkit.carla.carla_model import CoILICRA
-        from offlinerlkit.carla.carla_config import MODEL_CONFIGURATION
-        carla_model_state_dict = torch.load('data/models/nocrash/resnet34imnet10S1/checkpoints/660000.pth')['state_dict']
-        carla_model = CoILICRA(MODEL_CONFIGURATION)
-        carla_model.load_state_dict(carla_model_state_dict)
-        carla_model.eval()
-        def perception_model(obs):
-            obs = obs.reshape(1, 48, 48, 3)
-            obs = torch.tensor(obs).permute(0, 3, 1, 2).float()
-            return carla_model.perception(obs)[0].detach().numpy()
-        print(f'loaded carla_model')
-    else:
-        perception_model = None
+    # load perception encoder if exists
+    def perception_model(obs):
+        return None
 
     # create policy
     if "mem" in args.algo_name:
@@ -187,7 +174,7 @@ def train(args=get_args()):
     # create policy trainer
     policy_trainer = MFPolicyTrainer(
         policy=policy,
-        eval_env=env,
+        eval_env=None,#env,
         buffer=buffer,
         logger=logger,
         epoch=args.epoch,

@@ -12,14 +12,6 @@ from offlinerlkit.policy.model_free.edac import EDACPolicy
 from offlinerlkit.policy.model_free.awr import AWRPolicy
 from offlinerlkit.policy.model_free.mem_awr import MemAWRPolicy
 
-# model based
-from offlinerlkit.policy.model_based.mopo import MOPOPolicy
-from offlinerlkit.policy.model_based.mnm import MNMPolicy
-from offlinerlkit.policy.model_based.mobile import MOBILEPolicy
-from offlinerlkit.policy.model_based.rambo import RAMBOPolicy
-from offlinerlkit.policy.model_based.combo import COMBOPolicy
-
-
 __all__ = [
     "BasePolicy",
     "SACPolicy",
@@ -32,9 +24,4 @@ __all__ = [
     "AWRPolicy",
     "MemAWRPolicy",
     "EDACPolicy",
-    "MOPOPolicy",
-    "MNMPolicy",
-    "MOBILEPolicy",
-    "RAMBOPolicy",
-    "COMBOPolicy"
 ]

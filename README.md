@@ -26,4 +26,7 @@ CUDA_VISIBLE_DEVICES=0 nohup python -u MCNN/update_data.py --name pouring --num_
 CUDA_VISIBLE_DEVICES=1 nohup python -u MCNN/update_data.py --name scooping --num_memories_frac 0.1 > MCNN/logs/scooping_update_data_0.1_frac.log &
 ```
 
-
+Train BC with memories:
+```bash
+CUDA_VISIBLE_DEVICES=0 nohup python -u MCNN/td3bc_trainer.py --algo-name mem_bc --task pouring --num_memories_frac 0.1 --Lipz 1.0 --lamda 1.0 --use-tqdm 0 > MCNN/logs/pouring_mcnn_Lipz1.0_lamda1.0.log &
+```

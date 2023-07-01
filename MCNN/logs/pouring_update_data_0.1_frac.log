@@ -1,0 +1,12 @@
+WARNING (theano.configdefaults): install mkl with `conda install mkl-service`: No module named 'mkl'
+WARNING (theano.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+
+
+
+
+
+Finding memories for 32469 nodes' weights...
+memories.shape=(32469, 2055), memories_actions.shape=(32469, 7), memories_next_obs.shape=(32469, 2055), memories_rewards.shape=(32469,)
+Finding memories took 1197.9156849384308 seconds
+Updating 1003 train paths...
+Updating train paths took 14.311371803283691 seconds

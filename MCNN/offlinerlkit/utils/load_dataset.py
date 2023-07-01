@@ -4,32 +4,35 @@ import collections
 import pickle 
 
 def qlearning_dataset_percentbc(task, chosen_percentage, num_memories_frac):
-    
-    full_name = f'mems_obs/updated_datasets/{task}-{chosen_percentage}/updated_{num_memories_frac}_frac.pkl'
-    with open(full_name, 'rb') as f:
+    folder = f'MCNN/memories'
+    full_name = f'{task}_parsed_with_embeddings_moco_conv5'
+    save_name = f'{folder}/{full_name}_updated_{num_memories_frac}_frac.pkl'
+    with open(save_name, 'rb') as f:
             data = pickle.load(f)
 
     train_paths, memories_obs, memories_act, memories_next_obs, memories_rewards = data['train_paths'], data['memories_obs'], data['memories_act'], data['memories_next_obs'], data['memories_rewards']
 
-    choice = 'embeddings' if 'carla' in task else 'observations'
-
-    obs_dim = train_paths[0][choice].shape[1]
-    act_dim = train_paths[0]['actions'].shape[1]
-    print(f'{obs_dim=}, {act_dim=}')
-
-    observations = np.concatenate([path[choice] for path in train_paths], axis=0)
+    embeddings = np.concatenate([p['embeddings'] for p in train_paths])
+    proprioriception = np.concatenate([p['observations'] for p in train_paths])
+    observations = np.concatenate((proprioriception, embeddings), axis=1)
     actions = np.concatenate([path['actions'] for path in train_paths], axis=0)
-    next_observations = np.concatenate([path[f'next_{choice}'] for path in train_paths], axis=0)
     rewards = np.concatenate([path['rewards'] for path in train_paths], axis=0)
-    
-    for path in train_paths:
-        path['terminals'][-1] = 1.0
-    terminals = np.concatenate([path['terminals'] for path in train_paths], axis=0).astype(np.float32)
+    next_embeddings = np.concatenate([p['next_embeddings'] for p in train_paths])
+    next_proprioriception = np.concatenate([p['next_observations'] for p in train_paths])
+    next_observations = np.concatenate((next_proprioriception, next_embeddings), axis=1)
+    print(f'observations shape: {observations.shape}, actions shape: {actions.shape}, rewards shape: {rewards.shape}, next_observations shape: {next_observations.shape}')
 
     mem_observations = np.concatenate([path['mem_observations'] for path in train_paths], axis=0)
     mem_actions = np.concatenate([path['mem_actions'] for path in train_paths], axis=0)
     mem_next_observations = np.concatenate([path['mem_next_observations'] for path in train_paths], axis=0)
     mem_rewards = np.concatenate([path['mem_rewards'] for path in train_paths], axis=0)
+    print(f'mem_observations shape: {mem_observations.shape}, mem_actions shape: {mem_actions.shape}, mem_rewards shape: {mem_rewards.shape}, mem_next_observations shape: {mem_next_observations.shape}')
+
+    terminals = np.zeros_like(rewards)
+
+    action_normalizer = np.max(np.abs(actions), axis=0, keepdims=True)
+    actions = actions / action_normalizer
+    mem_actions = mem_actions / action_normalizer
 
     return {
         'observations': observations,
@@ -45,6 +48,7 @@ def qlearning_dataset_percentbc(task, chosen_percentage, num_memories_frac):
         'memories_actions': memories_act,
         'memories_next_obs': memories_next_obs,
         'memories_rewards': memories_rewards,
+        'action_normalizer': action_normalizer,
     }
 
 def qlearning_dataset(task, train_size, num_memories_frac):

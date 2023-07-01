@@ -15,7 +15,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # hyperparameters
 parser = argparse.ArgumentParser(description='Parse constants.')
-parser.add_argument('--name', default='puring', type=str, help="")
+parser.add_argument('--name', default='pouring', type=str, help="")
 parser.add_argument('--num_memories_frac', type=float, default=0.05) 
 args = parser.parse_args()
 print(f'\n\n\n\n')

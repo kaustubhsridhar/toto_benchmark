@@ -1,0 +1,15 @@
+observations shape: (323693, 2055), actions shape: (323693, 7), rewards shape: (323693,), next_observations shape: (323693, 2055)
+mem_observations shape: (323693, 2055), mem_actions shape: (323693, 7), mem_rewards shape: (323693,), mem_next_observations shape: (323693, 2055)
+max action: [1. 1. 1. 1. 1. 1. 1.]
+------------------------------------------------------------
+| loss/actor   | 0.00189  |
+| loss/critic1 | -1       |
+| loss/critic2 | -1       |
+| timestep     | 1000     |
+------------------------------------------------------------
+------------------------------------------------------------
+| loss/actor   | 0.000335 |
+| loss/critic1 | -1       |
+| loss/critic2 | -1       |
+| timestep     | 2000     |
+------------------------------------------------------------

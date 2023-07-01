@@ -31,3 +31,8 @@ Start training
 ---------------------------------------------------------
 |    Epoch    |  Train err  |  Valid err  |    Time     |
 ---------------------------------------------------------
+Number of nodes = 32469
+|           1 |     0.53124 |           - |    61:00:19 |
+---------------------------------------------------------
+
+==> for creating gng --- pouring_parsed_with_embeddings_moco_conv5 args.num_memories_frac=0.1, i.e. num_memories=32469/324696 duration=219625.22653484344
