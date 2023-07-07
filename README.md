@@ -1,4 +1,6 @@
 # Memory-Consistent Neural Networks
+Based on our submission to NeurIPS 2023 at [here](https://drive.google.com/file/d/1BkIQHdTJnlQq-Nnnd0400d1jBp7WIQIy/view).
+
 ## Setup
 Create env, install pytorch, install requirements:
 ```bash
@@ -12,7 +14,7 @@ pip install -r requirements.txt
 ## Download (MOCO) embeddings from creators of the benchmark
 Download:
 ```bash
-python MCNN/download_from_gdrive_and_extract.py
+python MCNN/download_from_gdrive.py
 ```
 
 ## Train MCNN

@@ -91,7 +91,7 @@ def train(args=get_args()):
     # env.seed(args.seed)
 
     # create policy model
-    actor_hidden_dims = [1024, 1024] if 'carla' in args.task else [256, 256]
+    actor_hidden_dims = [256, 256]
     actor_backbone = MLP(input_dim=np.prod(args.obs_shape), hidden_dims=actor_hidden_dims)
     critic1_backbone = MLP(input_dim=np.prod(args.obs_shape)+args.action_dim, hidden_dims=[256, 256])
     critic2_backbone = MLP(input_dim=np.prod(args.obs_shape)+args.action_dim, hidden_dims=[256, 256])
