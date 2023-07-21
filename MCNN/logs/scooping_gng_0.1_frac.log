@@ -31,3 +31,8 @@ Start training
 ---------------------------------------------------------
 |    Epoch    |  Train err  |  Valid err  |    Time     |
 ---------------------------------------------------------
+Number of nodes = 93720
+|           1 |     0.49006 |           - |   501:40:56 |
+---------------------------------------------------------
+
+==> for creating gng --- scooping_parsed_with_embeddings_moco_conv5 args.num_memories_frac=0.1, i.e. num_memories=93720/937203 duration=1806072.518834591

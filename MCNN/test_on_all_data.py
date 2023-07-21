@@ -46,11 +46,11 @@ for path in train_paths:
         combined = np.concatenate((c_embed, obs), axis=0)
 
         # find closest memory
-
+        
         
         # forward pass through MCNN
 
 
         # error with actual actions
-        
+
 
